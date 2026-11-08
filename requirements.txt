@@ -1,0 +1,2 @@
+# Install the local modified Ultralytics package and its declared dependencies.
+-e .
