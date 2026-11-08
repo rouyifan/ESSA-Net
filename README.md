@@ -8,7 +8,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.3.1-ee4c2c)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-blue)](LICENSE)
 
-ESSA-Net (Enhanced Spiking Self-Attention Network) is a two-stream detector for paired visible and infrared imagery. It addresses modality-dependent challenges such as poor visible-light contrast and infrared background clutter through cross-modal feature conditioning, virtual-step spiking attention, and difficulty-aware classification. The virtual time steps are internal computations on static paired images, not video frames.
+RGB–infrared object detection relies on complementary visual and thermal cues, but its performance can be affected by low illumination and background interference. **ESSA-Net** is a two-stream detector that combines cross-modal feature conditioning with virtual-time spiking attention. RIFusion promotes interaction between RGB and infrared features, while Enhanced Spiking Self-Attention (ESSA) uses leaky integrate-and-fire dynamics to encode features over multiple virtual steps. Adaptive-Threshold Focal Loss (ATFL) further introduces confidence-dependent modulation for classification. Experiments on DroneVehicle, LLVIP, and M3FD evaluate the framework across diverse RGB–infrared detection scenarios.
 
 This repository contains the full-model implementation and training and evaluation entry points. Dataset images and annotations are not included.
 
