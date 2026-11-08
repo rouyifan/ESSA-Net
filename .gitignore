@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.pt
+*.pth
+*.onnx
+*.engine
+*.cache
+datasets/
+datasets_split/
+runs/
+weights/
+.venv/
+.idea/
+.vscode/

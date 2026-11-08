@@ -1,0 +1,14 @@
+# Replace /path/to/DroneVehicle with your own prepared dataset directory.
+# RGB images, IR images and YOLO labels must use matching filenames.
+train: /path/to/DroneVehicle/images/train
+val: /path/to/DroneVehicle/images/val
+test: /path/to/DroneVehicle/images/test
+train_ir: /path/to/DroneVehicle/image/train
+val_ir: /path/to/DroneVehicle/image/val
+test_ir: /path/to/DroneVehicle/image/test
+names:
+  0: car
+  1: truck
+  2: bus
+  3: van
+  4: freight_car
