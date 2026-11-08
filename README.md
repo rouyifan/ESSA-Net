@@ -4,15 +4,13 @@
 
 **Zihan Yuan, Rouyi Fan, Zhihua Liu, Yuhong Zhang, Chunhua Zhu**
 
-**Publication:** [venue, year, paper link and DOI to be added upon publication]
-
 [![Python](https://img.shields.io/badge/Python-3.8-blue)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.3.1-ee4c2c)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-blue)](LICENSE)
 
 ESSA-Net (Enhanced Spiking Self-Attention Network) is a two-stream detector for paired visible and infrared imagery. It addresses modality-dependent challenges such as poor visible-light contrast and infrared background clutter through cross-modal feature conditioning, virtual-step spiking attention, and difficulty-aware classification. The virtual time steps are internal computations on static paired images, not video frames.
 
-This repository contains the full-model implementation and training and evaluation entry points. Dataset images, annotations and trained checkpoints are not included.
+This repository contains the full-model implementation and training and evaluation entry points. Dataset images and annotations are not included.
 
 ## Overall Architecture
 
@@ -48,16 +46,53 @@ ATFL uses confidence-dependent modulation in the classification loss to adjust t
 
 ## Main Results on Three Datasets
 
-The following are values reported in the manuscript. Metrics are percentages; mAP50 is mean AP at IoU 0.50, and mAP50–95 is mean AP over IoU thresholds 0.50–0.95. The baseline comparison below is reported only for DroneVehicle; corresponding baseline results for the other two datasets are not specified in the manuscript tables. Published comparison results may use different evaluation protocols.
+All results are percentages. Per-class values and mAP50 are AP at IoU 0.50; mAP50?95 is mean AP across IoU thresholds 0.50?0.95. Comparison values are reproduced from the manuscript; methods reported from the literature may use different evaluation protocols.
 
-| Dataset | Model | Input | mAP50 (%) | mAP50–95 (%) | Protocol in manuscript |
-|:--|:--|:--|--:|--:|:--|
-| DroneVehicle | Two-stream baseline | RGB + IR | 81.2 | — | Test set; runtime comparison |
-| DroneVehicle | **ESSA-Net** | RGB + IR | **83.1** | — | Test set |
-| LLVIP | **ESSA-Net** | RGB + IR | **98.7** | **72.3** | Paper's reported comparison protocol |
-| M3FD | **ESSA-Net** | RGB + IR | **82.7** | — | Paper's reported comparison protocol |
+### DroneVehicle
 
-The manuscript notes inconsistent M3FD protocols across prior studies. Exact split manifests and trained checkpoints for these results are not included in this release; see the publication for the reported comparison settings.
+| Method | Input | Car | Truck | Freight car | Bus | Van | mAP50 |
+|:--|:--|--:|--:|--:|--:|--:|--:|
+| YOLOv11 | RGB | 96.4 | 74.4 | 54.2 | 95.0 | 56.3 | 75.3 |
+| Hu et al. | RGB | 96.2 | 75.8 | 57.3 | 94.5 | 56.7 | 76.1 |
+| DAIK | IR | 90.2 | 71.6 | 57.4 | 89.9 | 50.2 | 71.7 |
+| I2MDet | IR | 96.3 | 73.4 | 65.0 | 93.2 | 58.6 | 77.3 |
+| Hu et al. | IR | 98.0 | 79.5 | 67.2 | 94.8 | 58.6 | 79.6 |
+| OAFA | RGB + IR | 90.3 | 76.8 | 73.3 | 90.3 | 66.0 | 79.4 |
+| VIP-Det | RGB + IR | 90.4 | 78.5 | 61.4 | 89.8 | 57.5 | 75.5 |
+| MROD-YOLO | RGB + IR | 96.7 | 63.2 | 47.3 | 51.9 | 93.0 | 70.4 |
+| C?Former | RGB + IR | 90.2 | 68.3 | 64.4 | 89.8 | 58.5 | 74.2 |
+| UAVD-Mamba | RGB + IR | 98.6 | 83.9 | 69.8 | 96.9 | 66.1 | 83.0 |
+| DEAF-Net | RGB + IR | 90.5 | 83.2 | 73.0 | 90.0 | 73.0 | 81.9 |
+| **ESSA-Net** | **RGB + IR** | **98.6** | **83.6** | **70.8** | **96.4** | **66.3** | **83.1** |
+
+### LLVIP
+
+| Method | Input | mAP50 | mAP50?95 |
+|:--|:--|--:|--:|
+| MFEIF | RGB + IR | 95.8 | 64.0 |
+| TarDAL | RGB + IR | 94.5 | 63.3 |
+| PIAFusion | RGB + IR | 96.1 | 62.4 |
+| SeAFusion | RGB + IR | 96.2 | 64.0 |
+| IRFS | RGB + IR | 94.0 | 60.7 |
+| DEYOLO-n | RGB + IR | 96.8 | 65.4 |
+| UniRGB-IR | RGB + IR | 96.1 | 63.2 |
+| GLNet-YOLO | RGB + IR | 96.6 | 65.9 |
+| IC-Fusion | RGB + IR | 97.9 | 70.3 |
+| RSDet | RGB + IR | 95.8 | 61.3 |
+| **ESSA-Net** | **RGB + IR** | **98.7** | **72.3** |
+
+### M3FD
+
+| Method | Input | People | Car | Bus | Motorcycle | Lamp | Truck | mAP50 |
+|:--|:--|--:|--:|--:|--:|--:|--:|--:|
+| U2Fusion | RGB + IR | 78.7 | 91.5 | 81.7 | 73.4 | 86.0 | 72.8 | 79.8 |
+| RFN-Nest | RGB + IR | 81.5 | 92.3 | 79.7 | 71.8 | 85.9 | 72.3 | 81.3 |
+| TarDAL | RGB + IR | 81.3 | 93.2 | 82.3 | 72.4 | 87.3 | 71.9 | 82.2 |
+| IRFS | RGB + IR | 80.7 | 91.8 | 81.9 | 71.5 | 86.2 | 70.7 | 80.7 |
+| SFDFusion | RGB + IR | 79.8 | 92.1 | 80.5 | 71.6 | 86.2 | 72.6 | 81.4 |
+| YOLOv10n-RGBT | RGB + IR | 82.4 | 91.4 | 87.6 | 76.9 | 83.7 | 62.9 | 80.8 |
+| YOLOv11n-RGBT | RGB + IR | 82.4 | 91.2 | 89.9 | 77.8 | 83.9 | 67.5 | 82.1 |
+| **ESSA-Net** | **RGB + IR** | **83.4** | **92.3** | **88.7** | **79.1** | **85.0** | **67.6** | **82.7** |
 
 ## Ablation Studies
 
@@ -75,32 +110,6 @@ The component ablation below is reported on the DroneVehicle **validation** set.
 | ✓ | ✓ | ✓ | **86.6** | **65.6** | **81.4** |
 
 The full configuration achieves the highest reported mAP50 in this table; partial combinations are not uniformly additive.
-
-### Virtual time steps
-
-Detection scores below are from the manuscript's DroneVehicle validation-set sensitivity table. T=6 is the reported main setting.
-
-| Virtual steps T | mAP50 (%) | mAP50–95 (%) | Forward latency (ms) |
-|--:|--:|--:|--:|
-| 1 | 85.8 | 64.8 | 16.2 |
-| 2 | 85.3 | 64.3 | 17.8 |
-| 4 | 85.8 | 64.7 | 22.1 |
-| 6 | **86.6** | **65.6** | 26.7 |
-| 8 | 84.9 | 63.9 | 30.8 |
-
-Latency was measured on an NVIDIA RTX 4090 using batch 1, FP16, 640 × 512 input, and 16 CPU threads. It measures synchronized model forward time and excludes image loading, preprocessing, host-to-device transfer, and NMS. Timing and detection scores are separate evaluations.
-
-### Encoding controls
-
-The manuscript compares ESSA with two static encoding controls on DroneVehicle validation:
-
-| Encoding | mAP50 (%) | mAP50–95 (%) |
-|:--|--:|--:|
-| Single-step LIF (T=1) | 85.8 | 64.8 |
-| Static sigmoid gating | 85.9 | 64.6 |
-| **Multi-step LIF (T=6)** | **86.6** | **65.6** |
-
-The ablation configurations and their checkpoints are not provided as separate runnable configurations in this release.
 
 ## Installation and Environment Preparation
 
@@ -158,28 +167,12 @@ python test.py --weights /path/to/best.pt --data /path/to/dronevehicle.yaml \
 
 Use `--split val` for validation. The released `--imgsz 640` is the code's evaluation setting; the separate latency benchmark above uses 640 × 512 inputs. Run `python test.py --help` for the available options.
 
-### Checkpoints
-
-Pretrained model weights are not currently distributed. Train a model or supply a compatible checkpoint to `--weights` for testing. A checkpoint link and a verified reproduction recipe will be added when available.
-
 ## License
 
 The project includes code derived from Ultralytics YOLO and is distributed under the [GNU Affero General Public License v3.0](LICENSE). Third-party packages and datasets are subject to their own licenses and terms; consult their respective repositories before use or redistribution.
 
 ## Acknowledgements
 
-This implementation builds on [Ultralytics](https://github.com/ultralytics/ultralytics) and [TwoStream-YOLOv8](https://github.com/mujianyu/TwoStream_Yolov8). The spiking components use [SpikingJelly](https://github.com/fangwei123456/spikingjelly). We thank the authors of DroneVehicle, LLVIP, and M3FD for making their resources available.
+This work was supported by the Open Research Fund of the Grain Information Processing Center of Henan University of Technology (Grant No. KFJJ2026007), the Natural Science Foundation of Henan Province, China (Grant No. 262300420307), Henan Provincial Key Scientific Research Project Program for Higher Education Institutions (Project No. 27A520006), and the National Natural Science Foundation of China (Grant No. 52379088).
 
 ## Citation
-
-The manuscript's publication details are not yet available. Replace the following placeholders with the final venue, year, and DOI when the paper is published:
-
-```bibtex
-@article{yuan_essa_net,
-  title   = {ESSA-Net: Virtual-Time Spiking Attention for Robust RGB--Infrared Object Detection},
-  author  = {Yuan, Zihan and Fan, Rouyi and Liu, Zhihua and Zhang, Yuhong and Zhu, Chunhua},
-  journal = {[VENUE TO BE ADDED]},
-  year    = {[YEAR TO BE ADDED]},
-  doi     = {[DOI TO BE ADDED]}
-}
-```
